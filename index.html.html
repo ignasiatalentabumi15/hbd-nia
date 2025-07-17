@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Happy Birthday Nia 🎂</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #ffe6f7, #ffd6ec);
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .screen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      animation: fadeIn 0.6s ease;
+    }
+    .active {
+      display: flex;
+    }
+    h1, h2, p {
+      color: #d63384;
+    }
+    .pin-display {
+      font-size: 2rem;
+      letter-spacing: 10px;
+      background: white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      border: 2px solid #ff99cc;
+      width: 180px;
+      margin-bottom: 20px;
+    }
+    .pin-pad {
+      display: grid;
+      grid-template-columns: repeat(3, 60px);
+      gap: 15px;
+    }
+    .pin-pad button {
+      font-size: 1.5rem;
+      padding: 15px;
+      border-radius: 10px;
+      background-color: #ff99cc;
+      color: white;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    }
+    .btn, .back-btn {
+      margin-top: 20px;
+      background-color: #ff66b2;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    input[type="text"] {
+      padding: 10px;
+      border-radius: 8px;
+      border: 2px solid #ff99cc;
+      width: 250px;
+      margin-top: 20px;
+      font-size: 1rem;
+    }
+    .notif {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    }
+    .message-list button {
+      display: block;
+      margin: 10px auto;
+      background-color: #ffa6d1;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .message-box {
+      display: flex;
+      flex-direction: column;
+      margin-top: 20px;
+    }
+    .chat-bubble {
+      background-color: #ffe1f0;
+      padding: 10px 15px;
+      border-radius: 20px;
+      margin: 5px auto;
+      max-width: 70%;
+      animation: pop 0.4s ease;
+    }
+    @keyframes pop {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .sticker {
+      font-size: 2rem;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="screen1" class="screen active">
+    <h1>Masukkan tahun lahir Nia 🎀</h1>
+    <div class="pin-display" id="pinDisplay">______</div>
+    <div class="pin-pad">
+      <button onclick="appendDigit('1')">1</button>
+      <button onclick="appendDigit('2')">2</button>
+      <button onclick="appendDigit('3')">3</button>
+      <button onclick="appendDigit('4')">4</button>
+      <button onclick="appendDigit('5')">5</button>
+      <button onclick="appendDigit('6')">6</button>
+      <button onclick="appendDigit('7')">7</button>
+      <button onclick="appendDigit('8')">8</button>
+      <button onclick="appendDigit('9')">9</button>
+      <button onclick="clearPin()">←</button>
+      <button onclick="appendDigit('0')">0</button>
+      <button onclick="checkPin()">OK</button>
+    </div>
+    <div class="sticker">🎂🎀🌸</div>
+  </div>
+
+  <div id="screen2" class="screen">
+    <h1>🎉 Happy 26th Birthday, Nia!</h1>
+    <p>Spill donk perasaan di hari ini!?</p>
+    <input id="feeling" type="text" placeholder="Tulis di sini ya.." />
+    <button class="btn" onclick="showNotif()">Kirim</button>
+    <button class="back-btn" onclick="showScreen('screen1')">⬅ Kembali</button>
+    <div class="sticker">🎁💖✨</div>
+  </div>
+
+  <div id="screen3" class="screen">
+    <div class="notif">
+      <p>📩 Pesan diterima, selamat ulang tahun :D</p>
+      <button class="btn" onclick="toMessages()">Lihat pesan teman</button>
+    </div>
+    <button class="back-btn" onclick="showScreen('screen2')">⬅ Kembali</button>
+    <div class="sticker">📨🌷🎊</div>
+  </div>
+
+  <div id="screen4" class="screen">
+    <h2>BACA WOY KITA UDAH SUSAH MERANGKAI KALIMAT! 💌</h2>
+    <div class="message-list">
+      <button onclick="showMessage('karin')">Karin</button>
+      <button onclick="showMessage('tacil')">Tacil</button>
+    </div>
+    <div class="message-box" id="messageBox"></div>
+    <button class="btn" onclick="toFinal()">Lanjut</button>
+    <button class="back-btn" onclick="resetMessages()">⬅ Kembali</button>
+    <div class="sticker">🧁🎈👯‍♀️</div>
+  </div>
+
+  <div id="screen5" class="screen">
+    <h1>🎂 Happy Birthday and Happy Weekend!</h1>
+    <p>From Team SOP 💖</p>
+    <button class="back-btn" onclick="showScreen('screen4')">⬅ Kembali ke pesan</button>
+    <div class="sticker">💌💐🎀</div>
+  </div>
+
+  <script>
+    let pin = "";
+
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    function appendDigit(digit) {
+      if(pin.length < 6) {
+        pin += digit;
+        updateDisplay();
+      }
+    }
+
+    function clearPin() {
+      pin = pin.slice(0, -1);
+      updateDisplay();
+    }
+
+    function updateDisplay() {
+      document.getElementById("pinDisplay").textContent = pin.padEnd(6, '_');
+    }
+
+    function checkPin() {
+      if(pin === "180799") {
+        showScreen("screen2");
+      } else {
+        alert("Ups, salah tahun lahirnya~ 😜");
+        pin = "";
+        updateDisplay();
+      }
+    }
+
+    function showNotif() {
+      const feeling = document.getElementById("feeling").value;
+      if(feeling.trim() === "") {
+        alert("Isi dulu heh! 💬");
+        return;
+      }
+      showScreen("screen3");
+    }
+
+    function toMessages() {
+      showScreen("screen4");
+    }
+
+    function showMessage(sender) {
+      const box = document.getElementById("messageBox");
+      if(sender === 'karin') {
+        box.innerHTML = '<div class="chat-bubble">Happy Birthday Elenia, semoga di umur yang baru ini kamu bisa menemuka jodoh yg sepadan dengan dirimu sukses selalu di setiap langkah hidupmu. Selalu jadi makna di kehidupan orang lain juga ya nia. Once again Happy Birthday</div>';
+      } else if(sender === 'tacil') {
+        box.innerHTML = '<div class="chat-bubble">Woy Nia! HBD Yawww. Semoga bahagia selalu, ambis selalu, sukses selalu. Jangan lupa jangan bego soal cinta HAHAHA! 🤪</div>';
+      }
+    }
+
+    function resetMessages() {
+      document.getElementById("messageBox").innerHTML = "";
+      showScreen("screen3");
+    }
+
+    function toFinal() {
+      showScreen("screen5");
+    }
+  </script>
+</body>
+</html>
